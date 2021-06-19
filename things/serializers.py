@@ -8,7 +8,7 @@ class ThingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Thing
-        fields = ['url', 'id', 'title', 'owner', 'value1', 'value2', 'value3', 'value4', 'switch']
+        fields = ['url', 'id', 'title', 'owner', 'value1', 'value2', 'value3', 'value4', 'switch1', 'switch2']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
