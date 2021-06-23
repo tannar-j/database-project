@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bph2!k)&v+obx4gb(yv=t#+dypyx3446drb=i(1ukq00=&%d&)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.167', 'localhost']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(', ')
 
 
 # Application definition
@@ -71,12 +71,12 @@ WSGI_APPLICATION = 'database.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'thing_database',
-        'USER': 'postgres',
-        'PASSWORD': 'password1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3'),  # default sqlite3 if desired
+        'NAME': os.environ.get('DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', ''),  # can leave empty on Digital Ocean
     }
 }
 
@@ -118,7 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 STATIC_URL = '/static/'
 
